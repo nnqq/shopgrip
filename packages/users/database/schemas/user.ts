@@ -10,7 +10,7 @@ export const userSchema = new Schema({
     type: Number,
     required: true,
   },
-  linksCount: {
+  urlsCount: {
     type: Number,
     default: 0,
   },

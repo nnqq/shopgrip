@@ -17,11 +17,11 @@ describe('Should login user by vkId', () => {
       },
     }));
 
-    const expectedResponse = {
+    const expectedResult = {
       userId: 'd6b6b4ae-9afb-49f4-a84f-b00cc5ad5a1c',
     };
 
-    const response = await handler({
+    const result = await handler({
       vkId: 123,
     });
 
@@ -29,7 +29,7 @@ describe('Should login user by vkId', () => {
       vkId: 123,
     }, ['userId']);
 
-    expect(response).toEqual(expectedResponse);
+    expect(response).toEqual(expectedResult);
   });
 
   test('Successfully create user if login first time', async () => {
@@ -51,11 +51,11 @@ describe('Should login user by vkId', () => {
       __v: 0,
     });
 
-    const expectedResponse = {
+    const expectedResult = {
       userId: '6b0d8575-8e20-4b9a-b6a1-41223d6dd211',
     };
 
-    const response = await handler({
+    const result = await handler({
       vkId: 456,
     });
 
@@ -67,6 +67,6 @@ describe('Should login user by vkId', () => {
       vkId: 456,
     });
 
-    expect(response).toEqual(expectedResponse);
+    expect(response).toEqual(expectedResult);
   });
 });

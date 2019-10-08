@@ -3,6 +3,9 @@ import bodyParser from 'body-parser';
 import RedisSession from 'node-vk-bot-api-session-redis';
 import VkBot from 'node-vk-bot-api';
 import Stage from 'node-vk-bot-api/lib/stage';
+import { auth } from './middlewares/auth';
+import { broker } from './broker';
+import { main } from './controllers/main';
 
 const stage = new Stage(/* Тут сцены */);
 
@@ -19,9 +22,13 @@ const bot = new VkBot({
 });
 
 bot.use(session.middleware());
+bot.use(auth);
 bot.use(stage.middleware());
+bot.event('message_new', main);
 
 const app = express();
 app.use(bodyParser.json());
 app.post('/85ead762-1494-4ef2-9114-3f7e9ffd105f', bot.webhookCallback);
-app.listen(process.env.PORT);
+app.listen(process.env.HTTP_PORT);
+
+broker.start();

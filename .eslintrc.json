@@ -5,6 +5,7 @@
         "jest": true
     },
     "extends": [
+        "plugin:@typescript-eslint/recommended",
         "airbnb-base"
     ],
     "globals": {
@@ -22,6 +23,8 @@
     "rules": {
         "import/prefer-default-export": "off",
         "import/no-unresolved": "off",
-        "no-unused-vars": "off"
+        "camelcase": "off",
+        "@typescript-eslint/camelcase": "off",
+        "no-underscore-dangle": "off"
     }
 }

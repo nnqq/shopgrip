@@ -1,8 +1,8 @@
 import { Context } from 'moleculer';
 import { handler as loginHandler } from './controllers/login';
-import { Params as LoginParams, Response as LoginResponse, action as loginAction } from './controllers/login/interfaces';
 import { USERS } from './constants';
 import { broker } from './broker';
+import { Params as LoginParams, Response as LoginResponse, action as loginAction } from './controllers/login/interfaces';
 
 broker.createService({
   name: USERS,

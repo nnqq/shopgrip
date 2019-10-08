@@ -1,18 +1,21 @@
 import {
   connect, model, Model, Document,
 } from 'mongoose';
-import { userSchema } from './schemas/user';
+import { urlSchema } from './schemas/url';
 
-export interface User extends Document {
+export interface Url extends Document {
   userId: string;
-  vkId: number;
-  urlsCount: number;
+  price: number;
+  title: string;
+  origUrl: string;
+  vkUrl: string;
+  refUrl: string;
 }
 
 export const db: {
-  users: Model<User>;
+  users: Model<Url>;
 } = {
-  users: model('User', userSchema),
+  users: model('Url', urlSchema),
 };
 
 connect(process.env.MONGO_URI, {

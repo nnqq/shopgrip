@@ -1,9 +1,9 @@
 export const action = 'login';
 
-export type Params = {
-  vkId: number
+export interface Params {
+  vkId: number;
 }
 
-export type Response = {
-  userId: string
+export interface Response {
+  userId: string;
 }
