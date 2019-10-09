@@ -10,7 +10,7 @@ describe('Should concatenate strings with dot separator', () => {
 
     const result = dotConcat('abc', 'de');
 
-    expect(response).toEqual(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 
   test('Successfully concat 3 strings', () => {
@@ -18,6 +18,6 @@ describe('Should concatenate strings with dot separator', () => {
 
     const result = dotConcat('abc', 'de', 'f');
 
-    expect(response).toEqual(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 });

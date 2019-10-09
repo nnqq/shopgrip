@@ -21,7 +21,9 @@ export const urlSchema = new Schema({
     type: String,
     required: true,
   },
-  refUrl: String,
+  refUrl: {
+    type: String,
+  },
 }, {
   timestamps: true,
 }).index({

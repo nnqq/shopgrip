@@ -3,19 +3,21 @@ import {
 } from 'mongoose';
 import { urlSchema } from './schemas/url';
 
-export interface Url extends Document {
+export interface UrlLean {
   userId: string;
   price: number;
   title: string;
   origUrl: string;
   vkUrl: string;
-  refUrl: string;
+  refUrl?: string;
 }
 
+export type Url = UrlLean & Document;
+
 export const db: {
-  users: Model<Url>;
+  urls: Model<Url>;
 } = {
-  users: model('Url', urlSchema),
+  urls: model('Url', urlSchema),
 };
 
 connect(process.env.MONGO_URI, {

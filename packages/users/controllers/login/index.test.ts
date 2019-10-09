@@ -29,7 +29,7 @@ describe('Should login user by vkId', () => {
       vkId: 123,
     }, ['userId']);
 
-    expect(response).toEqual(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 
   test('Successfully create user if login first time', async () => {
@@ -67,6 +67,6 @@ describe('Should login user by vkId', () => {
       vkId: 456,
     });
 
-    expect(response).toEqual(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 });

@@ -25,6 +25,8 @@
         "import/no-unresolved": "off",
         "camelcase": "off",
         "@typescript-eslint/camelcase": "off",
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "no-restricted-syntax": "off",
+        "no-continue": "off"
     }
 }

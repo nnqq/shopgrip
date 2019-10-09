@@ -34,6 +34,7 @@ module.exports = {
         NODE_ENV: 'development',
         NATS_URI: 'nats://0.0.0.0:4222',
         MONGO_URI: 'mongodb://0.0.0.0:27017/shopgrip-parser',
+        VK_TOKEN: '85a192c99e3cce1ad22a920f9d9cbc8b68e03dfa1758f8ead382ae9fe32b8150de8c6c37cb6140eedc3a7',
       },
     },
     {

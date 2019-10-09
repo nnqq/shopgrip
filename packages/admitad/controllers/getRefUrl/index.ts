@@ -9,7 +9,7 @@ import { isFalse } from '../../../lib/helpers/isFalse';
 import { isObject } from '../../../lib/helpers/isObject';
 
 export const handler = async (params: Params): Promise<Response> => {
-  const { url } = params;
+  const { url, userId } = params;
 
   const { host } = Url.parse(url);
 
@@ -67,7 +67,9 @@ export const handler = async (params: Params): Promise<Response> => {
     .find(({ site_url }) => site_url.includes(domain));
 
   if (isUndefined(foundCampaign)) {
-    throw new Error(`Не найдена партнерская программа для данного ИМ=${domain}`);
+    return {
+      refUrl: null,
+    };
   }
 
   const campaignId = foundCampaign.id;
@@ -75,7 +77,7 @@ export const handler = async (params: Params): Promise<Response> => {
   return admitad.genDeeplink({
     w_id: ADMITAD_WEBSITEID,
     c_id: campaignId,
-    subid: 'vk',
+    subid: `userId_${userId}`,
     ulp: url,
   });
 };
