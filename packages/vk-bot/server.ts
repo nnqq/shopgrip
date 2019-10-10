@@ -6,6 +6,9 @@ import Stage from 'node-vk-bot-api/lib/stage';
 import { auth } from './middlewares/auth';
 import { broker } from './broker';
 import { main } from './controllers/main';
+import {
+  BOT_TOKEN, BOT_GROUP_ID, BOT_CONFIRMATION, BOT_SECRET,
+} from './constants';
 
 const stage = new Stage(/* Тут сцены */);
 
@@ -15,10 +18,10 @@ const session = new RedisSession({
 });
 
 const bot = new VkBot({
-  token: process.env.BOT_TOKEN,
-  group_id: process.env.BOT_GROUP_ID,
-  confirmation: process.env.BOT_CONFIRMATION,
-  secret: process.env.BOT_SECRET,
+  token: BOT_TOKEN,
+  group_id: BOT_GROUP_ID,
+  confirmation: BOT_CONFIRMATION,
+  secret: BOT_SECRET,
 });
 
 bot.use(session.middleware());

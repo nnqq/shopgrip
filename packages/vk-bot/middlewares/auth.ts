@@ -4,7 +4,7 @@ import { broker } from '../broker';
 
 export const auth = async (ctx, next): Promise<void> => {
   if (isUndefined(ctx.session.userId)) {
-    const vkId = ctx.message.from_id;
+    const vkId = ctx.message.peer_id;
 
     const { userId } = await users.login(broker, { vkId });
 

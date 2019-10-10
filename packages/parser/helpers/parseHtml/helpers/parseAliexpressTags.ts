@@ -1,4 +1,5 @@
 import { JSDOM } from 'jsdom';
+import { shortString } from '../../shortString';
 
 interface ParseAliexpressTagsResponse {
   title: string;
@@ -6,18 +7,20 @@ interface ParseAliexpressTagsResponse {
 }
 
 export const parseAliexpressTags = (dom: JSDOM): ParseAliexpressTagsResponse => {
-  const title = dom.window.document.querySelector('.product-title').textContent;
+  const title = dom.window.document.querySelector('title').textContent;
 
   if (!title.length) {
     throw new Error('Название товара в Алиэкспресс пустая строка');
   }
 
-  const price = dom.window.document.querySelector('.product-price-value').textContent;
+  const ogTitleContent = dom.window.document.head.querySelector('meta[property="og:title"]').getAttribute('content');
 
-  const shortTitle = `${title.slice(0, 50)}...`;
+  if (!ogTitleContent.length) {
+    throw new Error('Цена товара в Алиэкспресс пустая строка');
+  }
 
   return {
-    title: shortTitle,
-    price: parseInt(price, 10),
+    title: shortString(title),
+    price: parseInt(ogTitleContent, 10),
   };
 };

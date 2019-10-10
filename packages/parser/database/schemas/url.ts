@@ -1,9 +1,14 @@
 import { Schema } from 'mongoose';
+import uuidv4 from 'uuid/v4';
 
 export const urlSchema = new Schema({
   userId: {
     type: String,
     required: true,
+  },
+  urlId: {
+    type: String,
+    default: uuidv4,
   },
   price: {
     type: Number,

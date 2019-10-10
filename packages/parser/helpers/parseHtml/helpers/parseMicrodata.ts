@@ -8,7 +8,9 @@ interface ParseMicrodataResponse {
 
 export const parseMicrodata = (html: string): ParseMicrodataResponse => {
   const jsonldArr = microdata.toJsonld(html);
-
+  const deletefuck = microdata.toJson(html);
+  console.error('deletefuck ==>>', deletefuck);
+  console.error('jsonldArr ==>> ', JSON.stringify(jsonldArr, null, 2));
   const response: ParseMicrodataResponse = {};
 
   for (const item of jsonldArr) {

@@ -6,7 +6,7 @@ import { parseMicrodata } from './helpers/parseMicrodata';
 import { isUndefined } from '../../../lib/helpers/isUndefined';
 import { parseTitleTag } from './helpers/parseTitleTag';
 import { isNull } from '../../../lib/helpers/isNull';
-import { ALIEXPRESS_DOMAIN } from '../../constants';
+import { Domain } from '../../interfaces';
 import { parseAliexpressTags } from './helpers/parseAliexpressTags';
 
 interface ParseHtmlResponse {
@@ -38,9 +38,9 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
     };
   }
 
-  if (!isUndefined(price)) {
-    const dom = new JSDOM(html);
+  const dom = new JSDOM(html);
 
+  if (!isUndefined(price)) {
     return {
       title: parseTitleTag(dom),
       price,
@@ -55,9 +55,7 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
 
   const { domain } = parsedHost as psl.ParsedDomain;
 
-  if (domain === ALIEXPRESS_DOMAIN) {
-    const dom = new JSDOM(html);
-
+  if (domain === Domain.aliexpress) {
     return parseAliexpressTags(dom);
   }
 
