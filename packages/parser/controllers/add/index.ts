@@ -7,6 +7,7 @@ import { VK_TOKEN } from '../../constants';
 import { parseHtml } from '../../helpers/parseHtml';
 import { isNull } from '../../../lib/helpers/isNull';
 import { isString } from '../../../lib/helpers/isString';
+import { users } from '../../../users';
 
 export const handler = async (params: Params): Promise<Response> => {
   const { userId, origUrl } = params;
@@ -42,7 +43,8 @@ export const handler = async (params: Params): Promise<Response> => {
 
   const newDoc = await db.urls.create(newDocObj);
 
-  // TODO increment urlsCount in users
+  await users.incrementUrlsCount(broker, { userId });
+
   return {
     title: newDoc.title,
     price: newDoc.price,

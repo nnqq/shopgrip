@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -29,6 +30,7 @@
     "@types/mongoose": "^5.5.19",
     "@types/node-fetch": "^2.5.2",
     "@types/psl": "^1.1.0",
-    "@types/uuid": "^3.4.5"
+    "@types/uuid": "^3.4.5",
+    "typescript": "^3.6.4"
   }
 }

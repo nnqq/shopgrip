@@ -3,6 +3,10 @@ import { stringify } from 'querystring';
 import Url, { URLSearchParams } from 'url';
 import { isNull } from '../../lib/helpers/isNull';
 import { ADMITAD_CLIENTID, ADMITAD_AUTH_BASE64 } from '../constants';
+import {textNotValidUrl} from "../../lib/helpers/textNotValidUrl";
+import {textConcat} from "../../lib/helpers/textConcat";
+import {textCantAdd} from "../../lib/helpers/textCantAdd";
+import {textTryAgain} from "../../lib/helpers/textTryAgain";
 
 interface AdmitadAuthResponse {
   username: string;
@@ -213,7 +217,7 @@ export class AdmitadApi {
     const { host } = Url.parse(admitadResponse);
 
     if (isNull(host)) {
-      throw new Error('Некорректный URL');
+      throw new Error(textConcat(textCantAdd(), textNotValidUrl(), textTryAgain()));
     }
 
     return {

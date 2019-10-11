@@ -7,6 +7,10 @@ import { isNull } from '../../../lib/helpers/isNull';
 import { isUndefined } from '../../../lib/helpers/isUndefined';
 import { isFalse } from '../../../lib/helpers/isFalse';
 import { isObject } from '../../../lib/helpers/isObject';
+import { textNotValidUrl } from '../../../lib/helpers/textNotValidUrl';
+import { textConcat } from '../../../lib/helpers/textConcat';
+import { textCantAdd } from '../../../lib/helpers/textCantAdd';
+import { textTryAgain } from '../../../lib/helpers/textTryAgain';
 
 export const handler = async (params: Params): Promise<Response> => {
   const { url, userId } = params;
@@ -14,7 +18,7 @@ export const handler = async (params: Params): Promise<Response> => {
   const { host } = Url.parse(url);
 
   if (isNull(host) || isFalse(psl.isValid(host))) {
-    throw new Error(`Некорректный URL=${url}`);
+    throw new Error(textConcat(textCantAdd(), textNotValidUrl(), textTryAgain()));
   }
 
   const admitad = new AdmitadApi();
@@ -58,7 +62,7 @@ export const handler = async (params: Params): Promise<Response> => {
   const parsed = psl.parse(host);
 
   if (isObject(parsed.error)) {
-    throw new Error(`Не получилось распарсить host=${host}`);
+    throw new Error(textConcat(textCantAdd(), textNotValidUrl(), textTryAgain()));
   }
 
   const { domain } = parsed as psl.ParsedDomain;

@@ -1,3 +1,3 @@
 export const PARSER = 'parser';
 
-export const { VK_TOKEN } = process.env;
+export const { MONGO_URI, VK_TOKEN } = process.env;

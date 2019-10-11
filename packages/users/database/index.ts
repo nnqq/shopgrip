@@ -2,6 +2,7 @@ import {
   connect, model, Model, Document,
 } from 'mongoose';
 import { userSchema } from './schemas/user';
+import { MONGO_URI } from '../constants';
 
 export interface User extends Document {
   userId: string;
@@ -15,7 +16,7 @@ export const db: {
   users: model('User', userSchema),
 };
 
-connect(process.env.MONGO_URI, {
+connect(MONGO_URI, {
   autoIndex: process.env.NODE_ENV === 'development',
   useNewUrlParser: true,
   useFindAndModify: false,

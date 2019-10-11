@@ -1,6 +1,12 @@
 import { Schema } from 'mongoose';
 import uuidv4 from 'uuid/v4';
 
+export interface User {
+  userId: string;
+  vkId: number;
+  urlsCount: number;
+}
+
 export const userSchema = new Schema({
   userId: {
     type: String,
@@ -20,4 +26,6 @@ export const userSchema = new Schema({
   vkId: 1,
 }, {
   unique: true,
+}).index({
+  userId: 1,
 });

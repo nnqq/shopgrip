@@ -8,8 +8,12 @@ import { parseTitleTag } from './helpers/parseTitleTag';
 import { isNull } from '../../../lib/helpers/isNull';
 import { Domain } from '../../interfaces';
 import { parseAliexpressTags } from './helpers/parseAliexpressTags';
+import { textNotValidUrl } from '../../../lib/helpers/textNotValidUrl';
+import { textConcat } from '../../../lib/helpers/textConcat';
+import { textCantAdd } from '../../../lib/helpers/textCantAdd';
+import { textTryAgain } from '../../../lib/helpers/textTryAgain';
 
-interface ParseHtmlResponse {
+export interface ParseHtmlResponse {
   title: string;
   price: number;
 }
@@ -18,7 +22,7 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
   const { host } = Url.parse(url);
 
   if (isNull(host)) {
-    throw new Error(`Невалидный URL=${url}`);
+    throw new Error(textConcat(textCantAdd(), textNotValidUrl(), textTryAgain()));
   }
 
   const raw = await fetch(url, {
@@ -50,7 +54,7 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
   const parsedHost = psl.parse(host);
 
   if (!isUndefined(parsedHost.error)) {
-    throw new Error(`Ошибка парсинга host=${host}`);
+    throw new Error(textConcat(textCantAdd(), textNotValidUrl(), textTryAgain()));
   }
 
   const { domain } = parsedHost as psl.ParsedDomain;
@@ -59,5 +63,5 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
     return parseAliexpressTags(dom);
   }
 
-  throw new Error(`Не смогли распознать title и price у url=${url}`);
+  throw new Error(textConcat(textCantAdd(), 'Не получилось распознать название товара и цену', textTryAgain()));
 };
