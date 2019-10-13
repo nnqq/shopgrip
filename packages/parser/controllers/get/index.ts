@@ -8,7 +8,7 @@ export const handler = async (params: Params): Promise<Response> => {
     db.urls.find({ userId }, ['-_id', 'title', 'price', 'vkUrl'], {
       limit: count,
       skip: offset,
-    }),
+    }).lean(),
     db.urls.countDocuments({ userId }),
   ]);
 

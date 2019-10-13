@@ -8,6 +8,7 @@ export interface UrlLean {
   userId: string;
   urlId?: string;
   title: string;
+  shop: string;
   price: number;
   origUrl: string;
   vkUrl: string;

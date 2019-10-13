@@ -10,7 +10,11 @@ export const initCron = async (): Promise<void> => {
     },
   });
 
-  agenda.define('update prices and send notifications', priceMonitor);
+  agenda.define('update prices and send notifications', async () => {
+    await priceMonitor();
+  });
+
+  await agenda.start();
 
   await agenda.every('15 minutes', 'update prices and send notifications');
 };

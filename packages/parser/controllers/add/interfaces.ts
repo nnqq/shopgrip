@@ -8,5 +8,6 @@ export interface Params {
 export interface Response {
   title: string;
   price: number;
+  shop: string;
   vkUrl: string;
 }

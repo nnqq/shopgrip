@@ -1,10 +1,9 @@
 import { Schema } from 'mongoose';
 import uuidv4 from 'uuid/v4';
 
-export interface User {
+export interface UserLean {
   userId: string;
   vkId: number;
-  urlsCount: number;
 }
 
 export const userSchema = new Schema({
@@ -15,10 +14,6 @@ export const userSchema = new Schema({
   vkId: {
     type: Number,
     required: true,
-  },
-  urlsCount: {
-    type: Number,
-    default: 0,
   },
 }, {
   timestamps: true,

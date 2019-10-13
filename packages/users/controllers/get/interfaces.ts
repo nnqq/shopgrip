@@ -1,4 +1,4 @@
-import { User } from '../../database/schemas/user';
+import { UserLean } from '../../database/schemas/user';
 
 export const action = 'get';
 
@@ -8,5 +8,5 @@ export interface Params {
 }
 
 export interface Response {
-  users: User[];
+  users: UserLean[];
 }

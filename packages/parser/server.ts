@@ -26,12 +26,6 @@ broker.createService({
   },
 });
 
-(async (): Promise<void> => {
-  try {
-    await broker.start();
+broker.start();
 
-    await initCron();
-  } catch (e) {
-    process.exit(1);
-  }
-})();
+initCron();

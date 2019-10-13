@@ -7,7 +7,6 @@ import { MONGO_URI } from '../constants';
 export interface User extends Document {
   userId: string;
   vkId: number;
-  urlsCount: number;
 }
 
 export const db: {
