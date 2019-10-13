@@ -29,7 +29,7 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
     headers: {
       'user-agent': 'Googlebot/2.1 (+http://www.googlebot.com/bot.html)',
     },
-    timeout: 30000,
+    timeout: 10000,
   });
 
   const html = await raw.text();

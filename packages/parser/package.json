@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "agenda": "^2.1.0",
+    "bluebird": "^3.7.0",
     "jsdom": "^15.1.1",
     "microdata-node": "^1.0.0",
     "moleculer": "^0.13.11",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@types/agenda": "^2.0.6",
+    "@types/bluebird": "^3.5.27",
     "@types/jsdom": "^12.2.4",
     "@types/mongoose": "^5.5.19",
     "@types/node-fetch": "^2.5.2",

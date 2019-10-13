@@ -4,21 +4,27 @@ import { isNull } from '../../lib/helpers/isNull';
 import { parseLinkAttachment } from '../helpers/parseLinkAttachment';
 import { parser } from '../../parser';
 import { broker } from '../broker';
+import { textConcat } from '../../lib/helpers/textConcat';
+import { textCantAdd } from '../../lib/helpers/textCantAdd';
+import { textTryAgain } from '../../lib/helpers/textTryAgain';
+import { httpPrefix } from '../helpers/httpPrefix';
+import { NODE_ENV } from '../constants';
+import { menuButtons } from '../buttons/menuButtons';
 
-const logger = pino();
+const logger = pino({
+  prettyPrint: NODE_ENV === 'development',
+});
 
 export const main = async (ctx): Promise<void> => {
   try {
     const message = ctx.message.text.trim().toLowerCase() || parseLinkAttachment(ctx.message);
 
-    const isStartsWithHttp = message.startsWith('http://') || message.startsWith('https://');
-
-    const messageWithHttp = isStartsWithHttp ? message : `http://${message}`;
+    const messageWithHttp = httpPrefix(message);
 
     const url = Url.parse(messageWithHttp);
 
     if (isNull(url.host)) {
-      return ctx.reply('Это не ссылка 😔 Пожалуйста, отправь ссылку на любой товар в любом интернет-магазине. Если не хочешь сейчас ничего добавлять, нажми на кнопку «🏠 Меню»');
+      return ctx.reply('Это не ссылка 😔 Пожалуйста, отправь ссылку на любой товар в любом интернет-магазине. Если не хочешь сейчас ничего добавлять, нажми на кнопку «🏠 Меню»', null, menuButtons);
     }
 
     const {
@@ -36,10 +42,14 @@ export const main = async (ctx): Promise<void> => {
 💸 ${price} руб
 🌐 ${vkUrl}`,
       dont_parse_links: true,
-    });
+    }, null, menuButtons);
   } catch (e) {
     logger.error(e);
 
-    return ctx.reply(e.message);
+    if (e.message.includes('😔')) {
+      return ctx.reply(e.message, null, menuButtons);
+    }
+
+    return ctx.reply(textConcat(textCantAdd(), 'Произошла ошибка', textTryAgain()), null, menuButtons);
   }
 };

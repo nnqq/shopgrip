@@ -1,3 +1,4 @@
+import bbPromise from 'bluebird';
 import { VK } from 'vk-io';
 import { db } from '../../database';
 import { users } from '../../../users';
@@ -22,17 +23,6 @@ type BulkUpdateOneOperations = Array<{
   };
 }>
 
-interface UrlWithNewPrice {
-  userId: string;
-  urlId: string;
-  title: string;
-  price: number;
-  shop: string;
-  origUrl: string;
-  vkUrl: string;
-  newPrice: number | null;
-}
-
 export const priceMonitor = async (): Promise<void> => {
   const urls = await db.urls.find({}, ['-_id', 'userId', 'urlId', 'title', 'price', 'shop', 'origUrl', 'vkUrl']).lean();
 
@@ -42,24 +32,24 @@ export const priceMonitor = async (): Promise<void> => {
     setUserIds.add(userId);
   });
 
-  const urlsWithNewPricePromises: Array<Promise<UrlWithNewPrice>> = urls.map(async ({
-    userId, urlId, title, price, shop, origUrl, vkUrl,
-  }) => {
-    const htmlParsed = await ignoreReject(parseHtml(origUrl));
-
-    const newPrice = isNull(htmlParsed) ? null : htmlParsed.price;
-
-    return {
-      userId, urlId, title, price, shop, origUrl, vkUrl, newPrice,
-    };
-  });
-
   const [{ users: usersArr }, urlsWithNewPrice] = await Promise.all([
     users.get(broker, {
       projection: ['-_id', 'userId', 'vkId'],
       userIds: [...setUserIds],
     }),
-    Promise.all(urlsWithNewPricePromises),
+    bbPromise.map(urls, async ({
+      userId, urlId, title, price, shop, origUrl, vkUrl,
+    }) => {
+      const htmlParsed = await ignoreReject(parseHtml(origUrl));
+
+      const newPrice = isNull(htmlParsed) ? null : htmlParsed.price;
+
+      return {
+        userId, urlId, title, price, shop, origUrl, vkUrl, newPrice,
+      };
+    }, {
+      concurrency: 10,
+    }),
   ]);
 
   const mapVkId: Map<UserId, VkId> = new Map();
@@ -68,11 +58,11 @@ export const priceMonitor = async (): Promise<void> => {
     mapVkId.set(userId, vkId);
   });
 
-  const bulkUpdateOneOperations: BulkUpdateOneOperations = [];
-
   const vk = new VK({
     token: VK_TOKEN,
   });
+
+  const bulkUpdateOneOperations: BulkUpdateOneOperations = [];
 
   const vkNotificationsPromises = [];
 
