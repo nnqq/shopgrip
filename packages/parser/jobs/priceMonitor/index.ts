@@ -83,7 +83,7 @@ export const priceMonitor = async (): Promise<void> => {
 
       vkNotificationsPromises.push(vk.api.messages.send({
         peer_id: mapVkId.get(userId),
-        message: `📉 Цена на товар в «${shop}» только что снизилась на ${price - newPrice} руб
+        message: `📉 Цена товара в «${shop}» только что снизилась на ${price - newPrice} руб
 
 📍 «${shop}»
 🛒 «${title}»

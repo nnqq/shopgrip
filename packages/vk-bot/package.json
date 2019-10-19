@@ -15,7 +15,7 @@
     "express": "^4.17.1",
     "moleculer": "^0.13.11",
     "nats": "^1.3.2",
-    "node-vk-bot-api": "^2.4.11",
+    "node-vk-bot-api": "^3.0.1",
     "node-vk-bot-api-session-redis": "^1.0.6",
     "pino": "^5.13.4"
   },

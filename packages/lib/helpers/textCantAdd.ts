@@ -1,1 +1,1 @@
-export const textCantAdd = (): string => 'Не удалось добавить 😔';
+export const textCantAdd = (): string => '😔 Не удалось добавить';

@@ -11,6 +11,7 @@ export interface Response {
   offset: number;
   totalCount: number;
   urls: Array<{
+    shop: string;
     title: string;
     price: number;
     vkUrl: string;

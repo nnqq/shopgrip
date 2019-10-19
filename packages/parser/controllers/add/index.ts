@@ -12,6 +12,7 @@ import { isString } from '../../../lib/helpers/isString';
 import { capitalize } from '../../../lib/helpers/capitalize';
 import { textCantAdd } from '../../../lib/helpers/textCantAdd';
 import { textConcat } from '../../../lib/helpers/textConcat';
+import { shortString } from '../../helpers/shortString';
 
 export const handler = async (params: Params): Promise<Response> => {
   const { userId, origUrl } = params;
@@ -42,7 +43,7 @@ export const handler = async (params: Params): Promise<Response> => {
   const newDocObj: UrlLean = {
     userId,
     price,
-    title,
+    title: shortString(title),
     shop: capitalize((psl.parse(capitalize(Url.parse(origUrl).host)) as ParsedDomain).sld),
     origUrl,
     vkUrl,

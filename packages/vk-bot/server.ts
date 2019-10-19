@@ -9,8 +9,10 @@ import { main } from './controllers/main';
 import {
   BOT_TOKEN, BOT_GROUP_ID, BOT_CONFIRMATION, BOT_SECRET,
 } from './constants';
+import { buttons } from './middlewares/buttons';
+import { getUrls } from './scenes/getUrls';
 
-const stage = new Stage(/* Тут сцены */);
+const stage = new Stage(getUrls);
 
 const session = new RedisSession({
   host: process.env.REDIS_HOST,
@@ -27,7 +29,8 @@ const bot = new VkBot({
 bot.use(session.middleware());
 bot.use(auth);
 bot.use(stage.middleware());
-bot.event('message_new', main);
+bot.use(buttons);
+bot.use(main);
 
 const app = express();
 app.use(bodyParser.json());

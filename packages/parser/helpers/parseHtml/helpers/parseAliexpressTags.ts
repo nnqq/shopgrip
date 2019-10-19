@@ -1,5 +1,4 @@
 import { JSDOM } from 'jsdom';
-import { shortString } from '../../shortString';
 import { textConcat } from '../../../../lib/helpers/textConcat';
 import { textCantAdd } from '../../../../lib/helpers/textCantAdd';
 import { textTryAgain } from '../../../../lib/helpers/textTryAgain';
@@ -25,7 +24,7 @@ export const parseAliexpressTags = (dom: JSDOM): ParseAliexpressTagsResponse => 
   }
 
   return {
-    title: shortString(title),
+    title,
     price: parseInt(ogTitleContent, 10),
   };
 };
