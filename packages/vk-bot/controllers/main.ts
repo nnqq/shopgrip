@@ -42,7 +42,8 @@ export const main = async (ctx): Promise<void> => {
 💸 ${price} руб
 🌐 ${vkUrl}`,
       dont_parse_links: true,
-    }, null, menuButtons);
+      keyboard: menuButtons,
+    });
   } catch (e) {
     logger.error(e);
 

@@ -2,8 +2,8 @@ import { MenuButton } from '../buttons/menuButtons/interfaces';
 import { SceneName } from '../scenes/interfaces';
 import { menuButtons } from '../buttons/menuButtons';
 
-export const buttons = (ctx, next): void => {
-  const message = ctx.message.text;
+export const buttons = async (ctx, next): Promise<void> => {
+  const message = ctx.message.text.trim();
 
   switch (message) {
     case MenuButton.addUrl: {

@@ -11,8 +11,9 @@ import {
 } from './constants';
 import { buttons } from './middlewares/buttons';
 import { getUrls } from './scenes/getUrls';
+import { deleteUrl } from './scenes/deleteUrl';
 
-const stage = new Stage(getUrls);
+const stage = new Stage(getUrls, deleteUrl);
 
 const session = new RedisSession({
   host: process.env.REDIS_HOST,

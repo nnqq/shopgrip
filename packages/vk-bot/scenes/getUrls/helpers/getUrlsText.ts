@@ -8,13 +8,6 @@ interface Response {
 }
 
 export const getUrlsText = (urls: Params): Response => {
-  if (!urls.length) {
-    return {
-      message: '😔 Товары не найдены. Можешь вернуться в Меню по кнопке «Назад в Меню»',
-      dont_parse_links: true,
-    };
-  }
-
   let message = '';
 
   urls.forEach(({
