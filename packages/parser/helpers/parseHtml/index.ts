@@ -12,6 +12,7 @@ import { textNotValidUrl } from '../../../lib/helpers/textNotValidUrl';
 import { textConcat } from '../../../lib/helpers/textConcat';
 import { textCantAdd } from '../../../lib/helpers/textCantAdd';
 import { textTryAgain } from '../../../lib/helpers/textTryAgain';
+import { parseDress4carTags } from './helpers/parseDress4carTags';
 
 export interface ParseHtmlResponse {
   title: string;
@@ -34,6 +35,12 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
 
   const html = await raw.text();
 
+  if (host.includes(Domain.dress4car)) {
+    const dom = new JSDOM(html);
+
+    return parseDress4carTags(dom);
+  }
+
   const { title, price } = parseMicrodata(html);
 
   if (!isUndefined(title) && !isUndefined(price)) {
@@ -43,9 +50,9 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
     };
   }
 
-  const dom = new JSDOM(html);
-
   if (!isUndefined(price)) {
+    const dom = new JSDOM(html);
+
     return {
       title: parseTitleTag(dom),
       price,
@@ -60,9 +67,15 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
 
   const { domain } = parsedHost as psl.ParsedDomain;
 
-  if (domain === Domain.aliexpress) {
-    return parseAliexpressTags(dom);
-  }
+  switch (domain) {
+    case Domain.aliexpress: {
+      const dom = new JSDOM(html);
 
-  throw new Error(textConcat(textCantAdd(), 'Не получилось распознать название товара и цену', textTryAgain()));
+      return parseAliexpressTags(dom);
+    }
+
+    default: {
+      throw new Error(textConcat(textCantAdd(), 'Не получилось распознать название товара и цену', textTryAgain()));
+    }
+  }
 };

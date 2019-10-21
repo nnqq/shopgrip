@@ -1,3 +1,4 @@
 export enum Domain {
-  aliexpress = 'aliexpress.com'
+  dress4car = 'dress4car.ru',
+  aliexpress = 'aliexpress.com',
 }

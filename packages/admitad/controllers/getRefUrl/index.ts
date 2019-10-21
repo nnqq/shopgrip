@@ -5,7 +5,6 @@ import { AdmitadApi, GetCampaignsResponse } from '../../helpers/AdmitadApi';
 import { ADMITAD_WEBSITEID } from '../../constants';
 import { isNull } from '../../../lib/helpers/isNull';
 import { isUndefined } from '../../../lib/helpers/isUndefined';
-import { isFalse } from '../../../lib/helpers/isFalse';
 import { isObject } from '../../../lib/helpers/isObject';
 import { textNotValidUrl } from '../../../lib/helpers/textNotValidUrl';
 import { textConcat } from '../../../lib/helpers/textConcat';
@@ -17,7 +16,7 @@ export const handler = async (params: Params): Promise<Response> => {
 
   const { host } = Url.parse(url);
 
-  if (isNull(host) || isFalse(psl.isValid(host))) {
+  if (isNull(host) || !psl.isValid(host)) {
     throw new Error(textConcat(textCantAdd(), textNotValidUrl(), textTryAgain()));
   }
 
