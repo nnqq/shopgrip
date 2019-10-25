@@ -81,7 +81,7 @@ export const priceMonitor = async (): Promise<void> => {
         },
       });
 
-      vkNotificationsPromises.push(vk.api.messages.send({
+      vkNotificationsPromises.push(ignoreReject(vk.api.messages.send({
         peer_id: mapVkId.get(userId),
         message: `📉 Цена товара в «${shop}» только что снизилась на ${price - newPrice} руб
 
@@ -91,14 +91,14 @@ export const priceMonitor = async (): Promise<void> => {
 💸 Новая цена: ${newPrice} руб
 🌐 ${vkUrl}`,
         dont_parse_links: true,
-      }));
+      })));
     }
   });
 
   const finishPromises: Array<Promise<any>> = [...vkNotificationsPromises];
 
   if (bulkUpdateOneOperations.length) {
-    finishPromises.push(db.urls.bulkWrite(bulkUpdateOneOperations));
+    finishPromises.push(ignoreReject(db.urls.bulkWrite(bulkUpdateOneOperations)));
   }
 
   await Promise.all(finishPromises);
