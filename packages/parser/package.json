@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clearDist": "rm -r dist",
+    "buildTs": "../../node_modules/.bin/tsc",
+    "buildContainer": "docker build -t dokku/shopgrip-parser:latest .",
+    "deployContainer": "docker save dokku/shopgrip-parser:latest | ssh root@shopgrip.ru \"docker load | dokku tags:deploy shopgrip-parser latest\"",
+    "deployParser": "npm run clearDist && npm run buildTs && npm run buildContainer && npm run deployContainer"
   },
   "keywords": [],
   "author": "",

@@ -14,5 +14,5 @@ export const initCron = async (): Promise<void> => {
 
   await agenda.start();
 
-  await agenda.every('30 seconds', 'update prices and send notifications');
+  await agenda.every('15 minutes', 'update prices and send notifications');
 };
