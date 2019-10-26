@@ -2,7 +2,7 @@ import {
   connect, model, Model, Document,
 } from 'mongoose';
 import { urlSchema } from './schemas/url';
-import { MONGO_URI } from '../constants';
+import { MONGO_URL } from '../constants';
 
 export interface UrlLean {
   userId: string;
@@ -23,7 +23,7 @@ export const db: {
   urls: model('Url', urlSchema),
 };
 
-connect(MONGO_URI, {
+connect(MONGO_URL, {
   autoIndex: process.env.NODE_ENV === 'development',
   useNewUrlParser: true,
   useFindAndModify: false,

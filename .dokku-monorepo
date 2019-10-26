@@ -1,0 +1,4 @@
+shopgrip-admitad=packages/admitad
+shopgrip-parser=packages/parser
+shopgrip-users=packages/users
+shopgrip-vk-bot=packages/vk-bot

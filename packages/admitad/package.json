@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "build-ts": "tsc",
+    "postinstall": "npm run build-ts",
+    "start": "npm run serve",
+    "serve": "node dist/admitad/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,6 +21,7 @@
   },
   "devDependencies": {
     "@types/node-fetch": "^2.5.2",
-    "@types/psl": "^1.1.0"
+    "@types/psl": "^1.1.0",
+    "typescript": "^3.6.3"
   }
 }
