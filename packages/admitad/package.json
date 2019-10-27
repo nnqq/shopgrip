@@ -6,9 +6,9 @@
   "scripts": {
     "clearDist": "rm -r dist",
     "buildTs": "../../node_modules/.bin/tsc",
-    "buildContainer": "docker build -t dokku/shopgrip-admitad:latest .",
-    "deployContainer": "docker save dokku/shopgrip-admitad:latest | ssh root@shopgrip.ru \"docker load | dokku tags:deploy shopgrip-admitad latest\"",
-    "deployAdmitad": "npm run clearDist && npm run buildTs && npm run buildContainer && sleep 15 && npm run deployContainer"
+    "buildContainer": "/usr/local/bin/docker build -t dokku/shopgrip-admitad:latest .",
+    "deployContainer": "/usr/local/bin/docker save dokku/shopgrip-admitad:latest | ssh root@shopgrip.ru \"/usr/local/bin/docker load | dokku tags:deploy shopgrip-admitad latest\"",
+    "deployAdmitad": "npm ci && npm run clearDist && npm run buildTs && npm run buildContainer && sleep 15 && npm run deployContainer"
   },
   "keywords": [],
   "author": "",
