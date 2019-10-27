@@ -37,11 +37,11 @@ export const handler = async (params: Params): Promise<Response> => {
   const { count } = campaignsFirstPage._meta;
 
   if (count > limit) {
-    const pagesCount = Math.ceil(count / limit);
+    const restPagesCount = Math.floor(count / limit);
 
     const restCampaignsPromises: Array<Promise<GetCampaignsResponse>> = [];
 
-    for (let i = limit; i <= pagesCount; i += 1) {
+    for (let i = 1; i <= restPagesCount; i += 1) {
       restCampaignsPromises.push(admitad.getCampaigns({
         limit,
         offset: limit * i,

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "pm2Debug": "pm2 start eco/eco.config.js --no-daemon",
     "test": "MONGO_URL=test jest --silent --coverage --forceExit"
   },
   "keywords": [],
