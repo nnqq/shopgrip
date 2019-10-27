@@ -35,7 +35,7 @@ export const handler = async (params: Params): Promise<Response> => {
   });
 
   const { count } = campaignsFirstPage._meta;
-  console.error('count ==>> ', count);
+
   if (count > limit) {
     const restPagesCount = Math.floor(count / limit);
 
@@ -68,7 +68,7 @@ export const handler = async (params: Params): Promise<Response> => {
 
   const foundCampaign = campaignsFirstPage.results
     .find(({ site_url }) => site_url.includes(domain));
-  console.error('foundCampaign ==>> ', JSON.stringify(foundCampaign, null, 2));
+
   if (isUndefined(foundCampaign)) {
     return {
       refUrl: null,

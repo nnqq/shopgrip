@@ -6,9 +6,10 @@
   "scripts": {
     "clearDist": "rm -r dist",
     "buildTs": "../../node_modules/.bin/tsc",
-    "buildContainer": "/usr/local/bin/docker build -t dokku/shopgrip-parser:latest .",
-    "deployContainer": "/usr/local/bin/docker save dokku/shopgrip-parser:latest | ssh root@shopgrip.ru \"/usr/local/bin/docker load | dokku tags:deploy shopgrip-parser latest\"",
-    "deployParser": "npm ci && npm run clearDist && npm run buildTs && npm run buildContainer && sleep 15 && npm run deployContainer"
+    "incVersion": "semver -i $(cat version.num) > version.num",
+    "buildContainer": "/usr/local/bin/docker build -t dokku/shopgrip-parser:$(cat version.num) .",
+    "deployContainer": "/usr/local/bin/docker save dokku/shopgrip-parser:$(cat version.num) | ssh root@shopgrip.ru \"docker load | dokku tags:create shopgrip-parser previous; dokku tags:deploy shopgrip-parser $(cat version.num)\"",
+    "deployParser": "npm ci && npm run clearDist && npm run buildTs && npm run incVersion && npm run buildContainer && npm run deployContainer"
   },
   "keywords": [],
   "author": "",
@@ -35,6 +36,7 @@
     "@types/node-fetch": "^2.5.2",
     "@types/pino": "^5.8.12",
     "@types/psl": "^1.1.0",
-    "@types/uuid": "^3.4.5"
+    "@types/uuid": "^3.4.5",
+    "semver": "^6.3.0"
   }
 }

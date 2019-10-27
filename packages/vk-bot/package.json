@@ -6,9 +6,10 @@
   "scripts": {
     "clearDist": "rm -r dist",
     "buildTs": "../../node_modules/.bin/tsc",
-    "buildContainer": "/usr/local/bin/docker build -t dokku/shopgrip-vk-bot:latest .",
-    "deployContainer": "/usr/local/bin/docker save dokku/shopgrip-vk-bot:latest | ssh root@shopgrip.ru \"/usr/local/bin/docker load | dokku tags:deploy shopgrip-vk-bot latest\"",
-    "deployVkBot": "npm ci && npm run clearDist && npm run buildTs && npm run buildContainer && sleep 15 && npm run deployContainer"
+    "incVersion": "semver -i $(cat version.num) > version.num",
+    "buildContainer": "/usr/local/bin/docker build -t dokku/shopgrip-vk-bot:$(cat version.num) .",
+    "deployContainer": "/usr/local/bin/docker save dokku/shopgrip-vk-bot:$(cat version.num) | ssh root@shopgrip.ru \"docker load | dokku tags:create shopgrip-vk-bot previous; dokku tags:deploy shopgrip-vk-bot $(cat version.num)\"",
+    "deployVkBot": "npm ci && npm run clearDist && npm run buildTs && npm run incVersion && npm run buildContainer && npm run deployContainer"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +28,6 @@
     "@types/express": "^4.17.1",
     "@types/pino": "^5.8.11",
     "pino-pretty": "^3.2.2",
-    "typescript": "^3.6.3"
+    "semver": "^6.3.0"
   }
 }
