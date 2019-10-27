@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clearDist": "rm -r dist",
+    "buildTs": "../../node_modules/.bin/tsc",
+    "buildContainer": "docker build -t dokku/shopgrip-vk-bot:latest .",
+    "deployContainer": "docker save dokku/shopgrip-vk-bot:latest | ssh root@shopgrip.ru \"docker load | dokku tags:deploy shopgrip-vk-bot latest\"",
+    "deployVkBot": "npm run clearDist && npm run buildTs && npm run buildContainer && sleep 15 && npm run deployContainer"
   },
   "keywords": [],
   "author": "",

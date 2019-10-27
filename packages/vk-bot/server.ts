@@ -16,8 +16,9 @@ import { deleteUrl } from './scenes/deleteUrl';
 const stage = new Stage(getUrls, deleteUrl);
 
 const session = new RedisSession({
-  host: process.env.DOKKU_REDIS_SHOPGRIP_REDIS_PORT_6379_TCP_ADDR,
-  port: process.env.DOKKU_REDIS_SHOPGRIP_REDIS_PORT_6379_TCP_PORT,
+  host: process.env.DOKKU_REDIS_SHOPGRIP_REDIS_VK_BOT_PORT_6379_TCP_ADDR,
+  port: process.env.DOKKU_REDIS_SHOPGRIP_REDIS_VK_BOT_PORT_6379_TCP_PORT,
+  password: process.env.REDIS_PASS,
 });
 
 const bot = new VkBot({
