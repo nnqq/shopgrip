@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "MONGO_URI=test jest --silent --coverage --forceExit"
+    "test": "MONGO_URL=test jest --silent --coverage --forceExit"
   },
   "keywords": [],
   "author": "",
