@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "test": "MONGO_URL=test jest --silent --coverage --forceExit",
     "clearDist": "rm -r dist",
     "buildTs": "../../node_modules/.bin/tsc",
     "incVersion": "semver -i $(cat version.num) > version.num",
     "buildContainer": "/usr/local/bin/docker build -t dokku/shopgrip-parser:$(cat version.num) .",
-    "deployContainer": "/usr/local/bin/docker save dokku/shopgrip-parser:$(cat version.num) | ssh root@shopgrip.ru \"docker load | dokku tags:create shopgrip-parser previous; dokku tags:deploy shopgrip-parser $(cat version.num)\"",
-    "deployParser": "npm ci && npm run clearDist && npm run buildTs && npm run incVersion && npm run buildContainer && npm run deployContainer"
+    "deployContainer": "/usr/local/bin/docker save dokku/shopgrip-parser:$(cat version.num) | bzip2 | ssh root@shopgrip.ru \"bunzip2 | docker load | dokku tags:create shopgrip-parser previous; dokku tags:deploy shopgrip-parser $(cat version.num)\"",
+    "deployParser": "npm ci && npm run test && npm run clearDist && npm run buildTs && npm run incVersion && npm run buildContainer && npm run deployContainer"
   },
   "keywords": [],
   "author": "",
@@ -31,12 +32,22 @@
   "devDependencies": {
     "@types/agenda": "^2.0.6",
     "@types/bluebird": "^3.5.27",
+    "@types/jest": "^24.0.20",
     "@types/jsdom": "^12.2.4",
     "@types/mongoose": "^5.5.19",
     "@types/node-fetch": "^2.5.2",
     "@types/pino": "^5.8.12",
     "@types/psl": "^1.1.0",
     "@types/uuid": "^3.4.5",
-    "semver": "^6.3.0"
+    "jest": "^24.9.0",
+    "semver": "^6.3.0",
+    "ts-jest": "^24.1.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "dist"
+    ]
   }
 }

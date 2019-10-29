@@ -2,13 +2,9 @@ import { JSDOM } from 'jsdom';
 import { textConcat } from '../../../../lib/helpers/textConcat';
 import { textCantAdd } from '../../../../lib/helpers/textCantAdd';
 import { textTryAgain } from '../../../../lib/helpers/textTryAgain';
+import { ParseTagsResponse } from '../../../interfaces';
 
-interface ParseDress4carTagsResponse {
-  title: string;
-  price: number;
-}
-
-export const parseDress4carTags = (dom: JSDOM): ParseDress4carTagsResponse => {
+export const parseDress4carTags = (dom: JSDOM): ParseTagsResponse => {
   const title = dom.window.document.querySelector('h1').textContent;
 
   if (!title.length) {

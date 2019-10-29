@@ -13,6 +13,7 @@ import { textConcat } from '../../../lib/helpers/textConcat';
 import { textCantAdd } from '../../../lib/helpers/textCantAdd';
 import { textTryAgain } from '../../../lib/helpers/textTryAgain';
 import { parseDress4carTags } from './helpers/parseDress4carTags';
+import { parseZadiTags } from './helpers/parseZadiTags';
 
 export interface ParseHtmlResponse {
   title: string;
@@ -72,6 +73,12 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
       const dom = new JSDOM(html);
 
       return parseAliexpressTags(dom);
+    }
+
+    case Domain.zadi: {
+      const dom = new JSDOM(html);
+
+      return parseZadiTags(dom);
     }
 
     default: {

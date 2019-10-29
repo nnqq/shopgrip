@@ -9,7 +9,7 @@
     "buildTs": "../../node_modules/.bin/tsc",
     "incVersion": "semver -i $(cat version.num) > version.num",
     "buildContainer": "/usr/local/bin/docker build -t dokku/shopgrip-users:$(cat version.num) .",
-    "deployContainer": "/usr/local/bin/docker save dokku/shopgrip-users:$(cat version.num) | ssh root@shopgrip.ru \"docker load | dokku tags:create shopgrip-users previous; dokku tags:deploy shopgrip-users $(cat version.num)\"",
+    "deployContainer": "/usr/local/bin/docker save dokku/shopgrip-users:$(cat version.num) | bzip2 | ssh root@shopgrip.ru \"bunzip2 | docker load | dokku tags:create shopgrip-users previous; dokku tags:deploy shopgrip-users $(cat version.num)\"",
     "deployUsers": "npm ci && npm run clearDist && npm run buildTs && npm run incVersion && npm run buildContainer && npm run deployContainer"
   },
   "keywords": [],

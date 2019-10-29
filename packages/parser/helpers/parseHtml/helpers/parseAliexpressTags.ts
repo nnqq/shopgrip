@@ -2,13 +2,9 @@ import { JSDOM } from 'jsdom';
 import { textConcat } from '../../../../lib/helpers/textConcat';
 import { textCantAdd } from '../../../../lib/helpers/textCantAdd';
 import { textTryAgain } from '../../../../lib/helpers/textTryAgain';
+import { ParseTagsResponse } from '../../../interfaces';
 
-interface ParseAliexpressTagsResponse {
-  title: string;
-  price: number;
-}
-
-export const parseAliexpressTags = (dom: JSDOM): ParseAliexpressTagsResponse => {
+export const parseAliexpressTags = (dom: JSDOM): ParseTagsResponse => {
   const title = dom.window.document.querySelector('title').textContent;
 
   if (!title.length) {
