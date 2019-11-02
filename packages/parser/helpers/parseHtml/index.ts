@@ -36,30 +36,6 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
 
   const html = await raw.text();
 
-  if (host.includes(Domain.dress4car)) {
-    const dom = new JSDOM(html);
-
-    return parseDress4carTags(dom);
-  }
-
-  const { title, price } = parseMicrodata(html);
-
-  if (!isUndefined(title) && !isUndefined(price)) {
-    return {
-      title,
-      price,
-    };
-  }
-
-  if (!isUndefined(price)) {
-    const dom = new JSDOM(html);
-
-    return {
-      title: parseTitleTag(dom),
-      price,
-    };
-  }
-
   const parsedHost = psl.parse(host);
 
   if (!isUndefined(parsedHost.error)) {
@@ -75,6 +51,12 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
       return parseAliexpressTags(dom);
     }
 
+    case Domain.dress4car: {
+      const dom = new JSDOM(html);
+
+      return parseDress4carTags(dom);
+    }
+
     case Domain.zadi: {
       const dom = new JSDOM(html);
 
@@ -82,6 +64,24 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
     }
 
     default: {
+      const { title, price } = parseMicrodata(html);
+
+      if (!isUndefined(title) && !isUndefined(price)) {
+        return {
+          title,
+          price,
+        };
+      }
+
+      if (!isUndefined(price)) {
+        const dom = new JSDOM(html);
+
+        return {
+          title: parseTitleTag(dom),
+          price,
+        };
+      }
+
       throw new Error(textConcat(textCantAdd(), 'Не получилось распознать название товара и цену', textTryAgain()));
     }
   }
