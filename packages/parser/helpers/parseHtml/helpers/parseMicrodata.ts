@@ -1,5 +1,6 @@
 import microdata from 'microdata-node';
 import { isUndefined } from '../../../../lib/helpers/isUndefined';
+import { stringToPrice } from '../../stringToPrice';
 
 interface ParseMicrodataResponse {
   title?: string;
@@ -14,6 +15,10 @@ export const parseMicrodata = (html: string): ParseMicrodataResponse => {
   for (const item of jsonldArr) {
     if (!isUndefined(response.title) && !isUndefined(response.price)) {
       return response;
+    }
+
+    if (isUndefined(item['@type'])) {
+      continue;
     }
 
     const isProduct = item['@type'][0] === 'http://schema.org/Product' || item['@type'][0] === 'https://schema.org/Product';
@@ -47,7 +52,7 @@ export const parseMicrodata = (html: string): ParseMicrodataResponse => {
         continue;
       }
 
-      response.price = +item[key][0]['@value'];
+      response.price = stringToPrice(item[key][0]['@value']);
     }
   }
 

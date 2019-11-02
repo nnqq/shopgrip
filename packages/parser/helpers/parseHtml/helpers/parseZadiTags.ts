@@ -3,6 +3,7 @@ import { textConcat } from '../../../../lib/helpers/textConcat';
 import { textCantAdd } from '../../../../lib/helpers/textCantAdd';
 import { textTryAgain } from '../../../../lib/helpers/textTryAgain';
 import { ParseTagsResponse } from '../../../interfaces';
+import { stringToPrice } from '../../stringToPrice';
 
 export const parseZadiTags = (dom: JSDOM): ParseTagsResponse => {
   const title = dom.window.document.querySelector('h1').textContent;
@@ -13,7 +14,7 @@ export const parseZadiTags = (dom: JSDOM): ParseTagsResponse => {
 
   const priceString = dom.window.document.querySelector('.text-18.text-bold.price').children[1].textContent;
 
-  const price = parseInt(priceString.replace(/[^\d.]*/g, ''), 10);
+  const price = stringToPrice(priceString);
 
   if (Number.isNaN(price)) {
     throw new Error(textConcat(textCantAdd(), 'Не получилось распознать цену товара в Zadi', textTryAgain()));
