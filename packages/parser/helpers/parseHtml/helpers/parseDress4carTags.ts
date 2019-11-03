@@ -4,7 +4,9 @@ import { textCantAdd } from '../../../../lib/helpers/textCantAdd';
 import { textTryAgain } from '../../../../lib/helpers/textTryAgain';
 import { ParseTagsResponse } from '../../../interfaces';
 
-export const parseDress4carTags = (dom: JSDOM): ParseTagsResponse => {
+export const parseDress4carTags = (html: string): ParseTagsResponse => {
+  const dom = new JSDOM(html);
+
   const title = dom.window.document.querySelector('h1').textContent;
 
   if (!title.length) {

@@ -6,7 +6,9 @@ import { ParseTagsResponse } from '../../../interfaces';
 import { isNull } from '../../../../lib/helpers/isNull';
 import { stringToPrice } from '../../stringToPrice';
 
-export const parseAliexpressTags = (dom: JSDOM): ParseTagsResponse => {
+export const parseAliexpressTags = (html: string): ParseTagsResponse => {
+  const dom = new JSDOM(html);
+
   const title = dom.window.document.querySelector('title').textContent;
 
   if (!title.length) {

@@ -5,7 +5,9 @@ import { textTryAgain } from '../../../../lib/helpers/textTryAgain';
 import { ParseTagsResponse } from '../../../interfaces';
 import { stringToPrice } from '../../stringToPrice';
 
-export const parseZadiTags = (dom: JSDOM): ParseTagsResponse => {
+export const parseZadiTags = (html: string): ParseTagsResponse => {
+  const dom = new JSDOM(html);
+
   const title = dom.window.document.querySelector('h1').textContent;
 
   if (!title.length) {

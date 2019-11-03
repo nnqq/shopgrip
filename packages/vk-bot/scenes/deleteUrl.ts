@@ -26,17 +26,18 @@ export const deleteUrl = new Scene(SceneName.deleteUrl,
       }
 
       default: {
-        const deletedResponse = await parser.delete(broker, {
-          userId: ctx.session.userId,
-          origUrlOrVkUrlOrPrice: message,
-        });
+        try {
+          const deletedResponse = await parser.delete(broker, {
+            userId: ctx.session.userId,
+            origUrlOrVkUrlOrPrice: message,
+          });
 
-        if (isNull(deletedResponse)) {
-          return ctx.reply(`😔 Не найдено ни одного товара с такой ссылкой/ценой. Если передумал, нажми кнопку (${DeleteUrlButton.toMenu}) чтобы вернуться в Меню`, null, deleteUrlButtons);
-        }
+          if (isNull(deletedResponse)) {
+            return ctx.reply(`😔 Не найдено ни одного товара с такой ссылкой/ценой. Если передумал, нажми кнопку (${DeleteUrlButton.toMenu}) чтобы вернуться в Меню`, null, deleteUrlButtons);
+          }
 
-        return ctx.reply({
-          message: `✅ Я удалил один товар из твоего списка отслеживания 
+          return ctx.reply({
+            message: `✅ Я удалил один товар из твоего списка отслеживания 
 
 📍 «${deletedResponse.shop}»
 🛒 «${deletedResponse.title}»
@@ -44,9 +45,12 @@ export const deleteUrl = new Scene(SceneName.deleteUrl,
 🌐 ${deletedResponse.vkUrl}
 
 ❓ Если хочешь удалить еще другой товар, отправь ссылку/цену. Если нет, нажми кнопку (${DeleteUrlButton.toMenu}) чтобы вернуться в Меню`,
-          dont_parse_links: true,
-          keyboard: deleteUrlButtons,
-        });
+            dont_parse_links: true,
+            keyboard: deleteUrlButtons,
+          });
+        } catch {
+          return ctx.reply(`😔 Похоже, что это не ссылка и не цена. Если передумал удалять товар, нажми кнопку (${DeleteUrlButton.toMenu}) чтобы вернуться в Меню`, null, deleteUrlButtons);
+        }
       }
     }
   });

@@ -1,7 +1,6 @@
 import Url from 'url';
 import psl from 'psl';
 import fetch from 'node-fetch';
-import { JSDOM } from 'jsdom';
 import { parseMicrodata } from './helpers/parseMicrodata';
 import { isUndefined } from '../../../lib/helpers/isUndefined';
 import { parseTitleTag } from './helpers/parseTitleTag';
@@ -14,6 +13,7 @@ import { textCantAdd } from '../../../lib/helpers/textCantAdd';
 import { textTryAgain } from '../../../lib/helpers/textTryAgain';
 import { parseDress4carTags } from './helpers/parseDress4carTags';
 import { parseZadiTags } from './helpers/parseZadiTags';
+import { parseBiggeekTags } from './helpers/parseBiggeekTags';
 
 export interface ParseHtmlResponse {
   title: string;
@@ -30,7 +30,6 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
   const raw = await fetch(url, {
     headers: {
       'User-Agent': 'Googlebot/2.1 (+http://www.googlebot.com/bot.html)',
-      'Accept-Language': 'ru-RU, ru',
     },
     timeout: 10000,
   });
@@ -47,21 +46,19 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
 
   switch (domain) {
     case Domain.aliexpress: {
-      const dom = new JSDOM(html);
-
-      return parseAliexpressTags(dom);
+      return parseAliexpressTags(html);
     }
 
     case Domain.dress4car: {
-      const dom = new JSDOM(html);
-
-      return parseDress4carTags(dom);
+      return parseDress4carTags(html);
     }
 
     case Domain.zadi: {
-      const dom = new JSDOM(html);
+      return parseZadiTags(html);
+    }
 
-      return parseZadiTags(dom);
+    case Domain.biggeek: {
+      return parseBiggeekTags(html);
     }
 
     default: {
@@ -75,10 +72,8 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
       }
 
       if (!isUndefined(price)) {
-        const dom = new JSDOM(html);
-
         return {
-          title: parseTitleTag(dom),
+          title: parseTitleTag(html),
           price,
         };
       }
