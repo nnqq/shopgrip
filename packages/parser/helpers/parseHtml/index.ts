@@ -29,7 +29,8 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
 
   const raw = await fetch(url, {
     headers: {
-      'user-agent': 'Googlebot/2.1 (+http://www.googlebot.com/bot.html)',
+      'User-Agent': 'Googlebot/2.1 (+http://www.googlebot.com/bot.html)',
+      'Accept-Language': 'ru-RU, ru',
     },
     timeout: 10000,
   });

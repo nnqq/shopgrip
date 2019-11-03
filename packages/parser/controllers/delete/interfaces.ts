@@ -2,7 +2,7 @@ export const action = 'delete';
 
 export interface Params {
   userId: string;
-  origOrVkUrl: string;
+  origUrlOrVkUrlOrPrice: string;
 }
 
 export type Response = {

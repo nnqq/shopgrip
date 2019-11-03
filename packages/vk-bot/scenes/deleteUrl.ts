@@ -13,7 +13,7 @@ export const deleteUrl = new Scene(SceneName.deleteUrl,
   (ctx): void => {
     ctx.scene.next();
 
-    return ctx.reply(`❓ Пожалуйста, отправь ссылку на товар, который хочешь удалить из своего списка отслеживания. Если передумал, нажми кнопку (${DeleteUrlButton.toMenu}) чтобы вернуться в Меню`, null, deleteUrlButtons);
+    return ctx.reply(`❓ Пожалуйста, отправь ссылку на товар (или его цену), который хочешь удалить из своего списка отслеживания. Если передумал, нажми кнопку (${DeleteUrlButton.toMenu}) чтобы вернуться в Меню`, null, deleteUrlButtons);
   },
   async (ctx): Promise<void> => {
     const message = ctx.message.text.trim() || parseLinkAttachment(ctx.message);
@@ -28,11 +28,11 @@ export const deleteUrl = new Scene(SceneName.deleteUrl,
       default: {
         const deletedResponse = await parser.delete(broker, {
           userId: ctx.session.userId,
-          origOrVkUrl: message,
+          origUrlOrVkUrlOrPrice: message,
         });
 
         if (isNull(deletedResponse)) {
-          return ctx.reply(`😔 Не найдено ни одного товара с такой ссылкой. Если передумал, нажми кнопку (${DeleteUrlButton.toMenu}) чтобы вернуться в Меню`, null, deleteUrlButtons);
+          return ctx.reply(`😔 Не найдено ни одного товара с такой ссылкой/ценой. Если передумал, нажми кнопку (${DeleteUrlButton.toMenu}) чтобы вернуться в Меню`, null, deleteUrlButtons);
         }
 
         return ctx.reply({
@@ -43,7 +43,7 @@ export const deleteUrl = new Scene(SceneName.deleteUrl,
 💸 ${deletedResponse.price} руб
 🌐 ${deletedResponse.vkUrl}
 
-❓ Если хочешь удалить еще другой товар, отправь ссылку. Если нет, нажми кнопку (${DeleteUrlButton.toMenu}) чтобы вернуться в Меню`,
+❓ Если хочешь удалить еще другой товар, отправь ссылку/цену. Если нет, нажми кнопку (${DeleteUrlButton.toMenu}) чтобы вернуться в Меню`,
           dont_parse_links: true,
           keyboard: deleteUrlButtons,
         });

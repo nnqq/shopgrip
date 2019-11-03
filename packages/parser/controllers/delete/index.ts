@@ -2,15 +2,18 @@ import { Params, Response } from './interfaces';
 import { db, UrlLean } from '../../database';
 
 export const handler = async (params: Params): Promise<Response> => {
-  const { userId, origOrVkUrl } = params;
+  const { userId, origUrlOrVkUrlOrPrice } = params;
 
   const deletedItem: UrlLean = await db.urls.findOneAndDelete({
     $or: [{
       userId,
-      vkUrl: origOrVkUrl,
+      vkUrl: origUrlOrVkUrlOrPrice,
     }, {
       userId,
-      origUrl: origOrVkUrl.toLowerCase(),
+      origUrl: origUrlOrVkUrlOrPrice,
+    }, {
+      userId,
+      price: parseInt(origUrlOrVkUrlOrPrice, 10),
     }],
   }, {
     projection: {

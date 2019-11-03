@@ -1,15 +1,14 @@
 import Url from 'url';
 import pino from 'pino';
 import { isNull } from '../../lib/helpers/isNull';
-import { parseLinkAttachment } from '../helpers/parseLinkAttachment';
 import { parser } from '../../parser';
 import { broker } from '../broker';
 import { textConcat } from '../../lib/helpers/textConcat';
 import { textCantAdd } from '../../lib/helpers/textCantAdd';
 import { textTryAgain } from '../../lib/helpers/textTryAgain';
-import { httpPrefix } from '../helpers/httpPrefix';
 import { NODE_ENV } from '../constants';
 import { menuButtons } from '../buttons/menuButtons';
+import { parseLink } from '../helpers/parseLink';
 
 const logger = pino({
   prettyPrint: NODE_ENV === 'development',
@@ -17,9 +16,7 @@ const logger = pino({
 
 export const main = async (ctx): Promise<void> => {
   try {
-    const message = ctx.message.text.trim().toLowerCase() || parseLinkAttachment(ctx.message);
-
-    const messageWithHttp = httpPrefix(message);
+    const messageWithHttp = parseLink(ctx.message);
 
     const url = Url.parse(messageWithHttp);
 
