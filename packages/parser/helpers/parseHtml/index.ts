@@ -1,6 +1,7 @@
 import Url from 'url';
 import psl from 'psl';
 import fetch from 'node-fetch';
+import UserAgent from 'user-agents';
 import { parseMicrodata } from './helpers/parseMicrodata';
 import { isUndefined } from '../../../lib/helpers/isUndefined';
 import { parseTitleTag } from './helpers/parseTitleTag';
@@ -27,9 +28,13 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
     throw new Error(textConcat(textCantAdd(), textNotValidUrl(), textTryAgain()));
   }
 
+  const userAgent = new UserAgent({
+    deviceCategory: 'desktop',
+  });
+
   const raw = await fetch(url, {
     headers: {
-      'User-Agent': 'Googlebot/2.1 (+http://www.googlebot.com/bot.html)',
+      'user-agent': userAgent.toString(),
     },
     timeout: 10000,
   });
