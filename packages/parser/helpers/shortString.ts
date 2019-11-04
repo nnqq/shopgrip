@@ -1,1 +1,5 @@
-export const shortString = (str: string): string => (str.length > 50 ? `${str.slice(0, 50)}...` : str);
+export const shortString = (str: string): string => {
+  const trimmed = str.trim();
+
+  return trimmed.length > 50 ? `${trimmed.slice(0, 50)}...` : trimmed;
+};
