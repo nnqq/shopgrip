@@ -40,4 +40,12 @@ describe('Should convert string with price to price number', () => {
 
     expect(result).toEqual(expectedResult);
   });
+
+  test('Successfully convert string "23`990 руб."', () => {
+    const expectedResult = 23990;
+
+    const result = stringToPrice('23`990 руб.');
+
+    expect(result).toEqual(expectedResult);
+  });
 });

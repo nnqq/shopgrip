@@ -15,6 +15,7 @@ import { textTryAgain } from '../../../lib/helpers/textTryAgain';
 import { parseDress4carTags } from './helpers/parseDress4carTags';
 import { parseZadiTags } from './helpers/parseZadiTags';
 import { parseBiggeekTags } from './helpers/parseBiggeekTags';
+import { parseSotamarket24Tags } from './helpers/parseSotamarket24Tags';
 
 export interface ParseHtmlResponse {
   title: string;
@@ -64,6 +65,10 @@ export const parseHtml = async (url: string): Promise<ParseHtmlResponse> => {
 
     case Domain.biggeek: {
       return parseBiggeekTags(html);
+    }
+
+    case Domain.sotamarket24: {
+      return parseSotamarket24Tags(html);
     }
 
     default: {

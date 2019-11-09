@@ -3,6 +3,7 @@ export enum Domain {
   aliexpress = 'aliexpress.com',
   zadi = 'zadi.ru',
   biggeek = 'biggeek.ru',
+  sotamarket24 = 'sotamarket24.ru',
 }
 
 export interface ParseTagsResponse {
