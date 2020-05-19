@@ -1,6 +1,6 @@
 # ShopGrip eshop price monitoring
 
-VK-bot which receive a link to some stuff in eshop, and when price goes down, it will send a message to you
+VK bot which receive a link to some stuff in eshop, and when price goes down, it will send a message to you. Bot is just separated service, as way of interaction with user, easy to add API and connect it to website
 
 ## Stack
 * TypeScript
