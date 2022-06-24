@@ -18,7 +18,7 @@
   "dependencies": {
     "agenda": "^2.1.0",
     "bluebird": "^3.7.0",
-    "jsdom": "^15.1.1",
+    "jsdom": "^16.5.0",
     "microdata-node": "^1.0.0",
     "moleculer": "^0.13.11",
     "mongoose": "^5.7.3",
